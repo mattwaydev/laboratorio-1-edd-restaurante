@@ -1,0 +1,4 @@
+1,Nombre_Plato_1,Categoria_1,1000,SI
+2,Nombre_Plato_2,Categoria_2,2000,SI
+3,Nombre_Plato_3,Categoria_3,3000,NO
+4,Nombre_Plato_4,Categoria_1,4000,SI
