@@ -6,6 +6,8 @@ package Main;
 import persistencia.PlatoDAO;
 import modelo.Plato;
 import java.util.ArrayList;
+import modelo.Mesa;
+import persistencia.MesaDAO;
 /**
  *
  * @author Matt
@@ -20,6 +22,16 @@ public class Main {
         for (Plato p : platos) {
             System.out.println(p);
         }
+        
+        //mesas lista
+        MesaDAO daoMesa = new MesaDAO();
+        ArrayList<Mesa> mesas = daoMesa.cargarMesas();
+        
+        System.out.println("\n-----Lista Mesas-----");
+        for (Mesa m : mesas) {
+            System.out.println(m);
+        }
+        
     }
     
 }
