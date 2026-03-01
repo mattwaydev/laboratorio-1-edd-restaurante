@@ -138,14 +138,15 @@ public class GestionPlatosPanel extends javax.swing.JPanel {
         jTable1.setFont(new java.awt.Font("Sitka Text", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Hamburguesa", "Entrada", "$25.000", "Si"},
-                {"2", "Pizza", "Principal", "$30.000", "Si"},
-                {"3", "Envingado", "Principal", "$28.000", "Si"},
-                {"4", "Salada", "Entrada", "$22.000", "Si"},
-                {"5", "Caesar sala", "Entrada", "$22.000", "Si"},
-                {"6", "Estroleta", "Principal", "$35.000", "Si"},
-                {"7", "Stek", "Principal", "$35.000", "Si"},
-                {"8", "Salmon", "Principal", "$32.000", "Si"}
+                {"1", "Hamburguesa", "Entrada", "$25.000", ""},
+                {"2", "Pizza", "Principal", "$30.000", ""},
+                {"3", "Envingado", "Principal", "$28.000", ""},
+                {"4", "Salada", "Entrada", "$22.000", ""},
+                {"5", "Caesar sala", "Entrada", "$22.000", ""},
+                {"6", "Estroleta", "Principal", "$35.000", ""},
+                {"7", "Stek", "Principal", "$35.000", ""},
+                {"8", "Salmon", "Principal", "$32.000", ""},
+                {null, null, null, null, null}
             },
             new String [] {
                 "ID", "Nombre", "Categoria", "Precio", "Disponible"
