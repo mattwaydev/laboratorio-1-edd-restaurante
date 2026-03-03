@@ -362,7 +362,12 @@ public class GestionMesaPanel extends javax.swing.JPanel {
     
     //regresar al menu
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new MenuPrincipal());
+        frame.revalidate();
+        frame.repaint();
     }//GEN-LAST:event_jButton5ActionPerformed
 
    

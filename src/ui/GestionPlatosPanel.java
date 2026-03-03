@@ -502,7 +502,12 @@ public class GestionPlatosPanel extends javax.swing.JPanel {
 
     // ete e el de regresa´
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new MenuPrincipal());
+        frame.revalidate();
+        frame.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

@@ -927,6 +927,11 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 0, 0));
         jButton1.setText("Volver Al Menú");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(225, 204, 182));
         jButton2.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
@@ -987,6 +992,15 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new MenuPrincipal());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -92,26 +92,51 @@ public class MenuPrincipal extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(51, 0, 0));
         jButton3.setText("Gestion De Platos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(51, 0, 0));
         jButton4.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(225, 204, 182));
         jButton4.setText("Pedidos");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(51, 0, 0));
         jButton5.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(225, 204, 182));
         jButton5.setText("Facturacion");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(51, 0, 0));
         jButton6.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(225, 204, 182));
         jButton6.setText("Reportes");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(225, 204, 182));
         jButton7.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(51, 0, 0));
         jButton7.setText("Gestion De Mesas");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -218,12 +243,62 @@ public class MenuPrincipal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new Ui());
+        frame.revalidate();
+        frame.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new GestionPlatosPanel());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new GestionMesaPanel());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new PedidosRestaurantes());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new Facturacion());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new Reporte());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
