@@ -169,7 +169,7 @@ public class Ui extends javax.swing.JFrame {
             .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\1754143806284-COMBO HAMRBURGUESA MIXTA .jpg")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/1754143806284-COMBO HAMRBURGUESA MIXTA .jpg"))); // NOI18N
         jLabel5.setText("jLabel5");
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));
@@ -218,6 +218,7 @@ public class Ui extends javax.swing.JFrame {
         jLabel2.setText("Pizza");
 
         jLabel7.setFont(new java.awt.Font("Sitka Text", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("$30.000");
 
         jButton2.setBackground(new java.awt.Color(51, 51, 51));
@@ -246,7 +247,7 @@ public class Ui extends javax.swing.JFrame {
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        jLabel38.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\FUNDIDA-CON-PEPPERONI.jpg")); // NOI18N
+        jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/FUNDIDA-CON-PEPPERONI.jpg"))); // NOI18N
         jLabel38.setText("jLabel38");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -315,7 +316,7 @@ public class Ui extends javax.swing.JFrame {
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        jLabel39.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\Tradiciones-culinarias-de-Envigado-13.jpg")); // NOI18N
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Tradiciones-culinarias-de-Envigado-13.jpg"))); // NOI18N
         jLabel39.setText("jLabel39");
 
         jLabel8.setBackground(new java.awt.Color(51, 51, 51));
@@ -399,7 +400,7 @@ public class Ui extends javax.swing.JFrame {
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        jLabel40.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\images.jpg")); // NOI18N
+        jLabel40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images.jpg"))); // NOI18N
         jLabel40.setText("jLabel40");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -472,7 +473,7 @@ public class Ui extends javax.swing.JFrame {
             .addComponent(jLabel48)
         );
 
-        jLabel41.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\placa-de-la-ensalada-verde-con-las-verduras-y-el-queso-feta-visión-superior-42269864.png")); // NOI18N
+        jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/placa-de-la-ensalada-verde-con-las-verduras-y-el-queso-feta-visión-superior-42269864.png"))); // NOI18N
         jLabel41.setText("jLabel41");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -543,7 +544,7 @@ public class Ui extends javax.swing.JFrame {
             .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
-        jLabel42.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\16026878075192.jpg")); // NOI18N
+        jLabel42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/16026878075192.jpg"))); // NOI18N
         jLabel42.setText("jLabel42");
 
         jButton9.setBackground(new java.awt.Color(51, 51, 51));
@@ -626,7 +627,7 @@ public class Ui extends javax.swing.JFrame {
             .addComponent(jLabel49, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel43.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\images (1).jpg")); // NOI18N
+        jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images (1).jpg"))); // NOI18N
         jLabel43.setText("jLabel43");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -698,7 +699,7 @@ public class Ui extends javax.swing.JFrame {
             .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
-        jLabel44.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\Proyecto U\\laboratorio-1-edd-restaurante\\imgs\\RECETA-2.jpg")); // NOI18N
+        jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/RECETA-2.jpg"))); // NOI18N
         jLabel44.setText("jLabel44");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -1228,7 +1229,7 @@ public class Ui extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(jLabel21)
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)

@@ -215,7 +215,7 @@
                           <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="90" max="32767" attributes="0"/>
+                  <EmptySpace pref="82" max="32767" attributes="0"/>
                   <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -394,7 +394,7 @@
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\1754143806284-COMBO HAMRBURGUESA MIXTA .jpg"/>
+                  <Image iconType="3" name="/resources/1754143806284-COMBO HAMRBURGUESA MIXTA .jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel5"/>
               </Properties>
@@ -487,6 +487,9 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Sitka Text" size="18" style="1"/>
                 </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="33" red="33" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="$30.000"/>
               </Properties>
             </Component>
@@ -544,7 +547,7 @@
             <Component class="javax.swing.JLabel" name="jLabel38">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\FUNDIDA-CON-PEPPERONI.jpg"/>
+                  <Image iconType="3" name="/resources/FUNDIDA-CON-PEPPERONI.jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel38"/>
               </Properties>
@@ -677,7 +680,7 @@
             <Component class="javax.swing.JLabel" name="jLabel39">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\Tradiciones-culinarias-de-Envigado-13.jpg"/>
+                  <Image iconType="3" name="/resources/Tradiciones-culinarias-de-Envigado-13.jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel39"/>
               </Properties>
@@ -833,7 +836,7 @@
             <Component class="javax.swing.JLabel" name="jLabel40">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\images.jpg"/>
+                  <Image iconType="3" name="/resources/images.jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel40"/>
               </Properties>
@@ -972,7 +975,7 @@
             <Component class="javax.swing.JLabel" name="jLabel41">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\placa-de-la-ensalada-verde-con-las-verduras-y-el-queso-feta-visi&#xf3;n-superior-42269864.png"/>
+                  <Image iconType="3" name="/resources/placa-de-la-ensalada-verde-con-las-verduras-y-el-queso-feta-visi&#xf3;n-superior-42269864.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel41"/>
               </Properties>
@@ -1117,7 +1120,7 @@
             <Component class="javax.swing.JLabel" name="jLabel42">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\16026878075192.jpg"/>
+                  <Image iconType="3" name="/resources/16026878075192.jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel42"/>
               </Properties>
@@ -1263,7 +1266,7 @@
             <Component class="javax.swing.JLabel" name="jLabel43">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\images (1).jpg"/>
+                  <Image iconType="3" name="/resources/images (1).jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel43"/>
               </Properties>
@@ -1406,7 +1409,7 @@
             <Component class="javax.swing.JLabel" name="jLabel44">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\USER\Documents\Proyecto U\laboratorio-1-edd-restaurante\imgs\RECETA-2.jpg"/>
+                  <Image iconType="3" name="/resources/RECETA-2.jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel44"/>
               </Properties>
