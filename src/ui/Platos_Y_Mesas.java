@@ -113,6 +113,11 @@ public class Platos_Y_Mesas extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 0, 0));
         jButton1.setText("Volver al menu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(225, 204, 182));
         jPanel2.setEnabled(false);
@@ -730,6 +735,15 @@ public class Platos_Y_Mesas extends javax.swing.JPanel {
                 .addGap(9, 9, 9))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame)
+                javax.swing.SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new MenuPrincipal());
+        frame.revalidate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,16 @@
  */
 package ui;
 
+import modelo.Plato;
+import modelo.Pedido;
+import modelo.DetallePedido;
+import persistencia.PlatoDAO;
+import persistencia.PedidoDAO;
+import persistencia.DetallePedidoDAO;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JTextField;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 /**
@@ -12,13 +22,41 @@ import com.formdev.flatlaf.FlatDarkLaf;
  */
 public class PedidosRestaurantes extends javax.swing.JPanel {
 
+    private int mesaSeleccionada = -1;
+    private int pedidoActualId = -1;
+    private PedidoDAO pedidoDAO = new PedidoDAO();
+    private DetallePedidoDAO detalleDAO = new DetallePedidoDAO();
+    private PlatoDAO platoDAO = new PlatoDAO();
+
     /**
      * Creates new form PedidosRestaurantes
      */
     public PedidosRestaurantes() {
         initComponents();
+        jButton3.addActionListener(e -> seleccionarMesa(1));
+        jButton4.addActionListener(e -> seleccionarMesa(2));
+        jButton5.addActionListener(e -> seleccionarMesa(3));
+        jButton6.addActionListener(e -> seleccionarMesa(4));
+        jButton7.addActionListener(e -> seleccionarMesa(5));
+        jButton8.addActionListener(e -> seleccionarMesa(6));
+        jButton9.addActionListener(e -> seleccionarMesa(7));
+        jButton10.addActionListener(e -> seleccionarMesa(8));
+        // Platos
+        jButton11.addActionListener(e -> agregarPlato(1));
+        jButton12.addActionListener(e -> agregarPlato(2));
+        jButton13.addActionListener(e -> agregarPlato(3));
+        jButton14.addActionListener(e -> agregarPlato(4));
+        jButton15.addActionListener(e -> agregarPlato(5));
+        jButton16.addActionListener(e -> agregarPlato(6));
+        jButton17.addActionListener(e -> agregarPlato(7));
+        jButton18.addActionListener(e -> agregarPlato(8));
+        // Pedido
+        jButton20.addActionListener(e -> realizarPedido());
+        jButton21.addActionListener(e -> cancelarPedido());
     }
-      public static void main(String args[]) {
+
+
+    public static void main(String args[]) {
         try {
             // Activa el tema oscuro
             FlatDarkLaf.setup();
@@ -28,11 +66,11 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
 
         java.awt.EventQueue.invokeLater(() -> {
             javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Platos - La Merlina");
-            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);       
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
             frame.add(new PedidosRestaurantes());
-              frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-    frame.setVisible(true);
-    frame.setLocationRelativeTo(null);
+            frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
         });
     }
 
@@ -334,7 +372,12 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
         jButton11.setText("+");
 
         jButton19.setBackground(new java.awt.Color(51, 0, 0));
-        jButton19.setText("}");
+        jButton19.setText("+");
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -993,15 +1036,97 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        javax.swing.JFrame frame = (javax.swing.JFrame)
-                javax.swing.SwingUtilities.getWindowAncestor(this);
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        agregarPlato(1);
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void seleccionarMesa(int idMesa) {
+            mesaSeleccionada = idMesa;
+            jTextField1.setText("Pedido para la mesa: " + idMesa);
+            String fecha = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+            modelo.Pedido nuevo = new modelo.Pedido(pedidoDAO.generarNuevoId(), mesaSeleccionada, fecha, "ABIERTO");
+            pedidoDAO.agregarPedido(nuevo);
+            pedidoActualId = nuevo.getIdPedido();
+            actualizarResumen();
+        }
+
+        private void agregarPlato(int idPlato) {
+            if(mesaSeleccionada == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "primero selecciona una mesa.");
+                return;
+            }
+            modelo.Plato plato = platoDAO.buscarPlatoPorId(idPlato);
+            if (plato == null || !plato.isDisponible()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Plato no disponible.");
+                return;
+            }
+            modelo.DetallePedido detalle = new modelo.DetallePedido(detalleDAO.generarNuevoId(), pedidoActualId, plato.getIdPlato(), plato.getNombre(), 1, plato.getPrecio());
+            detalleDAO.agregarDetalle(detalle);
+            actualizarResumen();
+        }
+
+        private void actualizarResumen() {
+            ArrayList<modelo.DetallePedido> detalles =
+                detalleDAO.obtenerPorPedido(pedidoActualId);
+            double total = 0;
+                // Limpiar campos
+            jTextField3.setText(""); jTextField4.setText("");
+            jTextField5.setText(""); jTextField6.setText("");
+            for (int i = 0; i < detalles.size() && i < 4; i++) {
+                modelo.DetallePedido d = detalles.get(i);
+                String texto = d.getNombrePlato() + " x" + d.getCantidad() +
+                            " - $" + d.getSubtotal();
+                if (i == 0) jTextField3.setText(texto);
+                else if (i == 1) jTextField4.setText(texto);
+                else if (i == 2) jTextField5.setText(texto);
+                else if (i == 3) jTextField6.setText(texto);
+                total += d.getSubtotal();
+            }
+            jTextField2.setText(String.valueOf(total));
+        }
+
+        private void realizarPedido() {
+            if (pedidoActualId == -1 || mesaSeleccionada == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No hay pedido activo.");
+                return;
+            }
+            pedidoDAO.actualizarEstado(pedidoActualId, "CERRADO");
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Pedido #" + pedidoActualId + " realizado. Total: $" + jTextField2.getText());
+            mesaSeleccionada = -1;
+            pedidoActualId = -1;
+            jTextField1.setText("Pedido Para La Mesa...");
+            jTextField2.setText("0");
+            jTextField3.setText(""); jTextField4.setText("");
+            jTextField5.setText(""); jTextField6.setText("");
+        }
+
+        private void cancelarPedido() {
+            if (pedidoActualId == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No hay pedido activo.");
+                return;
+            }
+            int confirmar = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Seguro que deseas cancelar el pedido?", "Cancelar", javax.swing.JOptionPane.YES_NO_OPTION);
+            if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+                pedidoDAO.actualizarEstado(pedidoActualId, "CANCELADO");
+                detalleDAO.eliminarPorPedido(pedidoActualId);
+                mesaSeleccionada = -1;
+                pedidoActualId = -1;
+                jTextField1.setText("Pedido Para La Mesa...");
+                jTextField2.setText("0");
+                jTextField3.setText(""); jTextField4.setText("");
+                jTextField5.setText(""); jTextField6.setText("");
+            }
+        }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+        javax.swing.JFrame frame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new MenuPrincipal());
         frame.revalidate();
         frame.repaint();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }// GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;

@@ -1,4 +1,8 @@
-1,Nombre_Plato_1,Categoria_1,1000,SI
-2,Nombre_Plato_2,Categoria_2,2000,SI
-3,Nombre_Plato_3,Categoria_3,3000,NO
-4,Nombre_Plato_4,Categoria_1,4000,SI
+1,Hamburguesa,Entrada,25000.0,SI
+2,Pizza,Principal,30000.0,SI
+3,Envingado,Principal,28000.0,SI
+4,Salada,Entrada,22000.0,SI
+5,Caesar sala,Entrada,22000.0,SI
+6,Estroleta,Principal,35000.0,SI
+7,Steak,Principal,35000.0,SI
+8,Salamé,Principal,32000.0,SI
