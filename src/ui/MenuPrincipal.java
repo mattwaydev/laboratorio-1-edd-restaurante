@@ -17,6 +17,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
      */
     public MenuPrincipal() {
         initComponents();
+    
 
 
     }
@@ -34,8 +35,9 @@ public class MenuPrincipal extends javax.swing.JPanel {
             frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);       
             frame.add(new MenuPrincipal());
             frame.pack();
-            frame.setLocationRelativeTo(null);
+            frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
             frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
         });
     }
     /**
@@ -183,8 +185,8 @@ public class MenuPrincipal extends javax.swing.JPanel {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Captura de pantalla 2026-03-01 183632.jpg"))); // NOI18N
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 41)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("Sitka Text", 1, 41)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 0, 0));
         jLabel2.setText("RESTAURANTE LA MERLINA ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -196,7 +198,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addContainerGap(10, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
@@ -250,7 +252,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
         javax.swing.JFrame frame = (javax.swing.JFrame)
                 javax.swing.SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
-        frame.getContentPane().add(new Ui());
+        frame.getContentPane().add(new Platos_Y_Mesas());
         frame.revalidate();
         frame.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed

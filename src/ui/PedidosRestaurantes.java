@@ -30,9 +30,9 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
             javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Platos - La Merlina");
             frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);       
             frame.add(new PedidosRestaurantes());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+              frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    frame.setVisible(true);
+    frame.setLocationRelativeTo(null);
         });
     }
 
@@ -903,7 +903,7 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(73, 0, 0));
 
-        jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Sitka Text", 1, 36)); // NOI18N
         jLabel2.setText("Pedidos Recientes");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
