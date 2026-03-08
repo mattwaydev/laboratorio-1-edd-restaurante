@@ -4,6 +4,8 @@
  */
 package ui;
 
+import modelo.Factura;
+import persistencia.FacturaDAO;
 import modelo.Plato;
 import modelo.Pedido;
 import modelo.DetallePedido;
@@ -27,6 +29,7 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private DetallePedidoDAO detalleDAO = new DetallePedidoDAO();
     private PlatoDAO platoDAO = new PlatoDAO();
+    private FacturaDAO facturaDAO = new FacturaDAO();
 
     /**
      * Creates new form PedidosRestaurantes
@@ -54,7 +57,6 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
         jButton20.addActionListener(e -> realizarPedido());
         jButton21.addActionListener(e -> cancelarPedido());
     }
-
 
     public static void main(String args[]) {
         try {
@@ -1041,84 +1043,117 @@ public class PedidosRestaurantes extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void seleccionarMesa(int idMesa) {
-            mesaSeleccionada = idMesa;
-            jTextField1.setText("Pedido para la mesa: " + idMesa);
-            String fecha = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
-            modelo.Pedido nuevo = new modelo.Pedido(pedidoDAO.generarNuevoId(), mesaSeleccionada, fecha, "ABIERTO");
-            pedidoDAO.agregarPedido(nuevo);
-            pedidoActualId = nuevo.getIdPedido();
-            actualizarResumen();
+        mesaSeleccionada = idMesa;
+        jTextField1.setText("Pedido para la mesa: " + idMesa);
+        String fecha = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        modelo.Pedido nuevo = new modelo.Pedido(pedidoDAO.generarNuevoId(), mesaSeleccionada, fecha, "ABIERTO");
+        pedidoDAO.agregarPedido(nuevo);
+        pedidoActualId = nuevo.getIdPedido();
+        actualizarResumen();
+    }
+
+    private void agregarPlato(int idPlato) {
+        if (mesaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "primero selecciona una mesa.");
+            return;
+        }
+        modelo.Plato plato = platoDAO.buscarPlatoPorId(idPlato);
+        if (plato == null || !plato.isDisponible()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Plato no disponible.");
+            return;
+        }
+        modelo.DetallePedido detalle = new modelo.DetallePedido(detalleDAO.generarNuevoId(), pedidoActualId, plato.getIdPlato(), plato.getNombre(), 1, plato.getPrecio());
+        detalleDAO.agregarDetalle(detalle);
+        actualizarResumen();
+    }
+
+    private void actualizarResumen() {
+        ArrayList<modelo.DetallePedido> detalles
+                = detalleDAO.obtenerPorPedido(pedidoActualId);
+        double total = 0;
+        // Limpiar campos
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        for (int i = 0; i < detalles.size() && i < 4; i++) {
+            modelo.DetallePedido d = detalles.get(i);
+            String texto = d.getNombrePlato() + " x" + d.getCantidad()
+                    + " - $" + d.getSubtotal();
+            if (i == 0) {
+                jTextField3.setText(texto);
+            } else if (i == 1) {
+                jTextField4.setText(texto);
+            } else if (i == 2) {
+                jTextField5.setText(texto);
+            } else if (i == 3) {
+                jTextField6.setText(texto);
+            }
+            total += d.getSubtotal();
+        }
+        jTextField2.setText(String.valueOf(total));
+    }
+
+    private void realizarPedido() {
+        if (pedidoActualId == -1 || mesaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay pedido activo.");
+            return;
         }
 
-        private void agregarPlato(int idPlato) {
-            if(mesaSeleccionada == -1) {
-                javax.swing.JOptionPane.showMessageDialog(this, "primero selecciona una mesa.");
-                return;
-            }
-            modelo.Plato plato = platoDAO.buscarPlatoPorId(idPlato);
-            if (plato == null || !plato.isDisponible()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Plato no disponible.");
-                return;
-            }
-            modelo.DetallePedido detalle = new modelo.DetallePedido(detalleDAO.generarNuevoId(), pedidoActualId, plato.getIdPlato(), plato.getNombre(), 1, plato.getPrecio());
-            detalleDAO.agregarDetalle(detalle);
-            actualizarResumen();
+        // Calcular subtotal leyendo los detalles reales
+        double subtotal = 0;
+        for (modelo.DetallePedido d : detalleDAO.obtenerPorPedido(pedidoActualId)) {
+            subtotal += d.getSubtotal();
         }
 
-        private void actualizarResumen() {
-            ArrayList<modelo.DetallePedido> detalles =
-                detalleDAO.obtenerPorPedido(pedidoActualId);
-            double total = 0;
-                // Limpiar campos
-            jTextField3.setText(""); jTextField4.setText("");
-            jTextField5.setText(""); jTextField6.setText("");
-            for (int i = 0; i < detalles.size() && i < 4; i++) {
-                modelo.DetallePedido d = detalles.get(i);
-                String texto = d.getNombrePlato() + " x" + d.getCantidad() +
-                            " - $" + d.getSubtotal();
-                if (i == 0) jTextField3.setText(texto);
-                else if (i == 1) jTextField4.setText(texto);
-                else if (i == 2) jTextField5.setText(texto);
-                else if (i == 3) jTextField6.setText(texto);
-                total += d.getSubtotal();
-            }
-            jTextField2.setText(String.valueOf(total));
-        }
+        double propina = subtotal * 0.10;
+        double total = subtotal + propina;
+        String fecha = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(new java.util.Date());
 
-        private void realizarPedido() {
-            if (pedidoActualId == -1 || mesaSeleccionada == -1) {
-                javax.swing.JOptionPane.showMessageDialog(this, "No hay pedido activo.");
-                return;
-            }
-            pedidoDAO.actualizarEstado(pedidoActualId, "CERRADO");
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Pedido #" + pedidoActualId + " realizado. Total: $" + jTextField2.getText());
+        // Cerrar pedido y generar factura
+        pedidoDAO.actualizarEstado(pedidoActualId, "CERRADO");
+        facturaDAO.agregarFactura(
+                new Factura(facturaDAO.generarNuevoId(), pedidoActualId, fecha, subtotal, propina, total)
+        );
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Pedido #" + pedidoActualId + " cerrado.\n"
+                + "Subtotal: $" + subtotal + "\n"
+                + "Propina (10%): $" + propina + "\n"
+                + "Total: $" + total);
+
+        // Resetear estado
+        mesaSeleccionada = -1;
+        pedidoActualId = -1;
+        jTextField1.setText("Pedido Para La Mesa...");
+        jTextField2.setText("0");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+    }
+
+    private void cancelarPedido() {
+        if (pedidoActualId == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay pedido activo.");
+            return;
+        }
+        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Seguro que deseas cancelar el pedido?", "Cancelar", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+            pedidoDAO.actualizarEstado(pedidoActualId, "CANCELADO");
+            detalleDAO.eliminarPorPedido(pedidoActualId);
             mesaSeleccionada = -1;
             pedidoActualId = -1;
             jTextField1.setText("Pedido Para La Mesa...");
             jTextField2.setText("0");
-            jTextField3.setText(""); jTextField4.setText("");
-            jTextField5.setText(""); jTextField6.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
         }
-
-        private void cancelarPedido() {
-            if (pedidoActualId == -1) {
-                javax.swing.JOptionPane.showMessageDialog(this, "No hay pedido activo.");
-                return;
-            }
-            int confirmar = javax.swing.JOptionPane.showConfirmDialog(this,
-                "¿Seguro que deseas cancelar el pedido?", "Cancelar", javax.swing.JOptionPane.YES_NO_OPTION);
-            if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
-                pedidoDAO.actualizarEstado(pedidoActualId, "CANCELADO");
-                detalleDAO.eliminarPorPedido(pedidoActualId);
-                mesaSeleccionada = -1;
-                pedidoActualId = -1;
-                jTextField1.setText("Pedido Para La Mesa...");
-                jTextField2.setText("0");
-                jTextField3.setText(""); jTextField4.setText("");
-                jTextField5.setText(""); jTextField6.setText("");
-            }
-        }
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         javax.swing.JFrame frame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);

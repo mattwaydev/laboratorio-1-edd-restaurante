@@ -5,6 +5,15 @@
 package ui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import modelo.Pedido;
+import modelo.DetallePedido;
+import modelo.Plato;
+import modelo.Factura;
+import persistencia.PedidoDAO;
+import persistencia.DetallePedidoDAO;
+import persistencia.PlatoDAO;
+import persistencia.FacturaDAO;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,8 +26,11 @@ public class Facturacion extends javax.swing.JPanel {
      */
     public Facturacion() {
         initComponents();
+        jButton4.addActionListener(e -> buscarPedido("Efectivo"));
+        jButton5.addActionListener(e -> buscarPedido("Tarjeta"));
     }
-        public static void main(String args[]) {
+
+    public static void main(String args[]) {
         try {
             // Activa el tema oscuro
             FlatDarkLaf.setup();
@@ -28,11 +40,11 @@ public class Facturacion extends javax.swing.JPanel {
 
         java.awt.EventQueue.invokeLater(() -> {
             javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Platos - La Merlina");
-            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);       
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
             frame.add(new Facturacion());
-             frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-    frame.setVisible(true);
-    frame.setLocationRelativeTo(null);
+            frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
         });
     }
 
@@ -205,7 +217,7 @@ public class Facturacion extends javax.swing.JPanel {
 
         jTextField1.setBackground(new java.awt.Color(51, 0, 0));
         jTextField1.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
-        jTextField1.setText("Mesa ...");
+        jTextField1.setText("ID Mesa");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -965,14 +977,89 @@ public class Facturacion extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        javax.swing.JFrame frame = (javax.swing.JFrame)
-                javax.swing.SwingUtilities.getWindowAncestor(this);
+        javax.swing.JFrame frame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new MenuPrincipal());
         frame.revalidate();
         frame.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void buscarPedido(String metodoPago) {
+        String input = jTextField1.getText().trim();
+        int idPedido;
+        try {
+            idPedido = Integer.parseInt(input);
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingresa un ID de pedido válido.");
+            return;
+        }
+
+        // Buscar pedido
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        Pedido pedido = pedidoDAO.buscarPorId(idPedido);
+        if (pedido == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Pedido #" + idPedido + " no encontrado.");
+            return;
+        }
+
+        // Buscar factura existente
+        FacturaDAO facturaDAO = new FacturaDAO();
+        Factura factura = facturaDAO.buscarPorIdPedido(idPedido);
+        if (factura == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Este pedido no tiene factura generada aún.");
+            return;
+        }
+
+        // Mostrar datos del pedido
+        jLabel2.setText("Mesa: " + pedido.getIdMesa());
+        jTextField2.setText(factura.getFechaHora());
+
+        // Llenar paneles de detalles
+        DetallePedidoDAO detalleDAO = new DetallePedidoDAO();
+        PlatoDAO platoDAO = new PlatoDAO();
+        ArrayList<DetallePedido> detalles = detalleDAO.obtenerPorPedido(idPedido);
+
+        javax.swing.JLabel[][] filas = {
+            {jLabel8, jLabel9, jLabel10},
+            {jLabel11, jLabel12, jLabel13},
+            {jLabel14, jLabel15, jLabel16},
+            {jLabel17, jLabel18, jLabel19},
+            {jLabel20, jLabel21, jLabel22},
+            {jLabel23, jLabel24, jLabel25},
+            {jLabel26, jLabel27, jLabel28},
+            {null, null, null} // jPanel17 vacío
+        };
+
+        for (int i = 0; i < filas.length; i++) {
+            if (filas[i][0] == null) {
+                continue;
+            }
+            if (i < detalles.size()) {
+                DetallePedido d = detalles.get(i);
+                Plato plato = platoDAO.buscarPlatoPorId(d.getIdPlato());
+                String nombre = (plato != null) ? plato.getNombre() : "Plato #" + d.getIdPlato();
+                filas[i][0].setText("x" + d.getCantidad());
+                filas[i][1].setText(nombre);
+                filas[i][2].setText("$" + String.format("%.2f", d.getSubtotal()));
+            } else {
+                filas[i][0].setText("-");
+                filas[i][1].setText("-");
+                filas[i][2].setText("-");
+            }
+        }
+
+        // Mostrar totales
+        jTextField3.setText(String.format("%.2f", factura.getSubtotal()));
+        jTextField5.setText(String.format("%.2f", factura.getPropina()));
+        jTextField4.setText(String.format("%.2f", factura.getTotal()));
+
+        jTextField7.setText(String.format("%.2f", factura.getSubtotal()));
+        jTextField8.setText(String.format("%.2f", factura.getPropina()));
+        jTextField9.setText(String.format("%.2f", factura.getTotal()));
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Factura cargada — Pago: " + metodoPago);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

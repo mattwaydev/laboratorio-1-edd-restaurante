@@ -5,6 +5,18 @@
 package ui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import modelo.Factura;
+import modelo.DetallePedido;
+import modelo.Plato;
+import persistencia.FacturaDAO;
+import persistencia.DetallePedidoDAO;
+import persistencia.PlatoDAO;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,7 +29,13 @@ public class Reporte extends javax.swing.JPanel {
      */
     public Reporte() {
         initComponents();
+        jButton1.addActionListener(e -> generarReporteVentas());
+        jButton3.addActionListener(e -> generarTop5Platos());
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[]{"Fecha", "Cant. Pedidos", "Total Vendido"}, 0
+        ));
     }
+
     public static void main(String args[]) {
         try {
             // Activa el tema oscuro
@@ -28,11 +46,11 @@ public class Reporte extends javax.swing.JPanel {
 
         java.awt.EventQueue.invokeLater(() -> {
             javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Platos - La Merlina");
-            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);       
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
             frame.add(new Reporte());
-          frame.pack();
-    frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-    frame.setVisible(true);
+            frame.pack();
+            frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+            frame.setVisible(true);
             frame.setLocationRelativeTo(null);
         });
     }
@@ -377,7 +395,7 @@ public class Reporte extends javax.swing.JPanel {
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -401,7 +419,6 @@ public class Reporte extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,6 +497,11 @@ public class Reporte extends javax.swing.JPanel {
         jButton3.setBackground(new java.awt.Color(0, 51, 0));
         jButton3.setFont(new java.awt.Font("Sitka Text", 0, 14)); // NOI18N
         jButton3.setText("Descargar Reporte");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -517,7 +539,6 @@ public class Reporte extends javax.swing.JPanel {
         jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 4));
 
         jLabel13.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel13.setText("Imagen");
 
         jLabel15.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 0, 0));
@@ -558,7 +579,6 @@ public class Reporte extends javax.swing.JPanel {
         jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 4));
 
         jLabel17.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel17.setText("imagen");
 
         jLabel18.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(51, 0, 0));
@@ -598,7 +618,6 @@ public class Reporte extends javax.swing.JPanel {
         jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 4));
 
         jLabel20.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel20.setText("jLabel20");
 
         jLabel21.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(51, 0, 0));
@@ -638,7 +657,6 @@ public class Reporte extends javax.swing.JPanel {
         jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 4));
 
         jLabel23.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel23.setText("jLabel23");
 
         jLabel24.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(51, 0, 0));
@@ -679,7 +697,6 @@ public class Reporte extends javax.swing.JPanel {
         jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 4));
 
         jLabel27.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel27.setText("imagen");
 
         jLabel28.setFont(new java.awt.Font("Sitka Text", 0, 18)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(51, 0, 0));
@@ -878,9 +895,101 @@ public class Reporte extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void generarReporteVentas() {
+        String desdeStr = jTextField2.getText().trim().replace(" ", "");
+        String hastaStr = jTextField3.getText().trim().replace(" ", "");
+
+        try {
+            SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+            Date desde = fmt.parse(desdeStr);
+            Date hasta = fmt.parse(hastaStr);
+
+            FacturaDAO facturaDAO = new FacturaDAO();
+            ArrayList<Factura> facturas = facturaDAO.cargarFacturas();
+
+            HashMap<String, double[]> porFecha = new HashMap<>();
+            double totalGeneral = 0;
+
+            for (Factura f : facturas) {
+                String fechaHora = f.getFechaHora();
+                Date fechaF;
+                if (fechaHora.contains("T")) {
+                    fechaF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(fechaHora);
+                } else {
+                    fechaF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fechaHora);
+                }
+
+                if (!fechaF.before(desde) && !fechaF.after(hasta)) {
+                    String dia = fmt.format(fechaF);
+                    porFecha.putIfAbsent(dia, new double[]{0, 0});
+                    porFecha.get(dia)[0]++;
+                    porFecha.get(dia)[1] += f.getTotal();
+                    totalGeneral += f.getTotal();
+                }
+            }
+
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            modelo.setRowCount(0);
+            for (Map.Entry<String, double[]> entrada : porFecha.entrySet()) {
+                modelo.addRow(new Object[]{
+                    entrada.getKey(),
+                    (int) entrada.getValue()[0],
+                    String.format("$%.2f", entrada.getValue()[1])
+                });
+            }
+
+            jTextField4.setText(String.format("%.2f", totalGeneral));
+            
+            generarTop5Platos();
+
+            if (porFecha.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No hay ventas en ese rango.");
+            }
+
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getClass().getSimpleName() + ": " + ex.getMessage());
+        }
+    }
+
+    private void generarTop5Platos() {
+        DetallePedidoDAO detalleDAO = new DetallePedidoDAO();
+        PlatoDAO platoDAO = new PlatoDAO();
+        ArrayList<DetallePedido> detalles = detalleDAO.cargarDetalles();
+
+        // Sumar cantidades por idPlato
+        HashMap<Integer, Integer> conteo = new HashMap<>();
+        for (DetallePedido d : detalles) {
+            conteo.put(d.getIdPlato(),
+                    conteo.getOrDefault(d.getIdPlato(), 0) + d.getCantidad());
+        }
+
+        // Ordenar de mayor a menor y tomar top 5
+        ArrayList<Map.Entry<Integer, Integer>> lista
+                = new ArrayList<>(conteo.entrySet());
+        lista.sort((a, b) -> b.getValue() - a.getValue());
+
+        // Labels de nombre y cantidad para cada posición
+        javax.swing.JLabel[] nombresLabels = {jLabel15, jLabel18, jLabel21, jLabel24, jLabel28};
+        javax.swing.JLabel[] cantidadLabels = {jLabel16, jLabel19, jLabel22, jLabel25, jLabel29};
+
+        for (int i = 0; i < nombresLabels.length; i++) {
+            if (i < lista.size()) {
+                int idPlato = lista.get(i).getKey();
+                int cantidad = lista.get(i).getValue();
+                Plato plato = platoDAO.buscarPlatoPorId(idPlato);
+                String nombre = (plato != null) ? plato.getNombre() : "Plato #" + idPlato;
+                nombresLabels[i].setText(nombre);
+                cantidadLabels[i].setText(String.valueOf(cantidad));
+            } else {
+                nombresLabels[i].setText("-");
+                cantidadLabels[i].setText("0");
+            }
+        }
+    }
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        javax.swing.JFrame frame = (javax.swing.JFrame)
-                javax.swing.SwingUtilities.getWindowAncestor(this);
+        javax.swing.JFrame frame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new MenuPrincipal());
         frame.revalidate();
@@ -894,6 +1003,10 @@ public class Reporte extends javax.swing.JPanel {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
