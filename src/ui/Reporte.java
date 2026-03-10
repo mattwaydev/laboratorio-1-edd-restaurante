@@ -939,7 +939,7 @@ public class Reporte extends javax.swing.JPanel {
             }
 
             jTextField4.setText(String.format("%.2f", totalGeneral));
-            
+
             generarTop5Platos();
 
             if (porFecha.isEmpty()) {
@@ -1005,7 +1005,85 @@ public class Reporte extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Verificar que haya datos generados
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        if (modelo.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Primero genera el reporte de ventas antes de descargar.",
+                    "Sin datos", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setSelectedFile(new java.io.File("Reporte_Restaurante.txt"));
+        fileChooser.setDialogTitle("Guardar reporte como...");
+
+        if (fileChooser.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File archivo = fileChooser.getSelectedFile();
+            // en txt
+            if (!archivo.getName().endsWith(".txt")) {
+                archivo = new java.io.File(archivo.getAbsolutePath() + ".txt");
+            }
+
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(
+                    new java.io.OutputStreamWriter(
+                            new java.io.FileOutputStream(archivo), "UTF-8"))) {
+
+                String linea = "========================================";
+                pw.println(linea);
+                pw.println("   REPORTE RESTAURANTE - LA MERLINA");
+                pw.println("   Generado: " + new java.util.Date());
+                pw.println(linea);
+
+                // --- SECCIÓN 1: Ventas por rango de fechas ---
+                pw.println("\n>>> VENTAS POR RANGO DE FECHAS");
+                pw.println("  Desde: " + jTextField2.getText());
+                pw.println("  Hasta: " + jTextField3.getText());
+                pw.println("----------------------------------------");
+                pw.printf("  %-15s %-15s %-15s%n", "Fecha", "Cant.Pedidos", "Total Vendido");
+                pw.println("----------------------------------------");
+
+                for (int i = 0; i < modelo.getRowCount(); i++) {
+                    Object fecha = modelo.getValueAt(i, 0);
+                    Object cant = modelo.getValueAt(i, 1);
+                    Object total = modelo.getValueAt(i, 2);
+                    pw.printf("  %-15s %-15s %-15s%n", fecha, cant, total);
+                }
+
+                pw.println("----------------------------------------");
+                pw.println("  TOTAL GENERAL: " + jTextField4.getText());
+
+                // --- SECCIÓN 2: Top 5 Platos ---
+                pw.println("\n>>> TOP 5 PLATOS MÁS VENDIDOS");
+                pw.println("----------------------------------------");
+                pw.printf("  %-5s %-25s %-10s%n", "Pos.", "Plato", "Cantidad");
+                pw.println("----------------------------------------");
+
+                javax.swing.JLabel[] nombres = {jLabel15, jLabel18, jLabel21, jLabel24, jLabel28};
+                javax.swing.JLabel[] cantidades = {jLabel16, jLabel19, jLabel22, jLabel25, jLabel29};
+
+                for (int i = 0; i < nombres.length; i++) {
+                    String nombrePlato = nombres[i].getText();
+                    String cantidad = cantidades[i].getText();
+                    if (!nombrePlato.isEmpty() && !nombrePlato.equals("-")) {
+                        pw.printf("  %-5s %-25s %-10s%n", (i + 1) + ".", nombrePlato, cantidad);
+                    }
+                }
+
+                pw.println(linea);
+                pw.println("   FIN DEL REPORTE");
+                pw.println(linea);
+
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Reporte guardado exitosamente en:\n" + archivo.getAbsolutePath(),
+                        "Descarga exitosa", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (Exception ex) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Error al guardar el reporte: " + ex.getMessage(),
+                        "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
